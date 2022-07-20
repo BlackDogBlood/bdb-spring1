@@ -4,22 +4,28 @@ import com.bdb.spring.demo.dto.UserCreateDto;
 import com.bdb.spring.demo.dto.UserUpdateDto;
 import com.bdb.spring.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-//1. Example pagination api
-//2. Example of many-to-one/ one-to-many relation. Unidirectional vs Bidirectional relation
-//3. Read properties from application.properties
-//4. Read environment variables
-//5. Example of spring profiles (different properties profiles, example of creating beans based on profiles)
 
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
 
+    @Value("${spring.application.name}")
+    private String appName;
+
+    @Value("${spring.application.names}")
+    private int[] appNames;
+
     private final UserService userService;
+
+    @GetMapping("/get-prop")
+    public ResponseEntity<?> getProperty() {
+        return ResponseEntity.ok(appNames);
+    }
 
     @GetMapping
     public ResponseEntity<?> getAll() {

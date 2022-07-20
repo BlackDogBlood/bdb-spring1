@@ -4,6 +4,7 @@ import com.bdb.spring.demo.dto.UserCreateDto;
 import com.bdb.spring.demo.dto.UserDto;
 import com.bdb.spring.demo.dto.UserUpdateDto;
 import com.bdb.spring.demo.entity.User;
+import com.bdb.spring.demo.mapper.UserMapper;
 import com.bdb.spring.demo.repository.UserRepository;
 import com.bdb.spring.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public List<UserDto> getAll() {
@@ -60,10 +62,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserDto userDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setGender(user.getGender());
-        return userDto;
+        return userMapper.toDto(user);
     }
 }
